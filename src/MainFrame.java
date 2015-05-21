@@ -17,10 +17,9 @@ public class MainFrame extends JFrame{
     public void setFrame() {
 
         panel = new Panel();
+        panel.setPanel();
         panelView = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        panel.setPanel();
-
         tree = new Tree(panel,this);
         treeView = new JScrollPane(tree);
 

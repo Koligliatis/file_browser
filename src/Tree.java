@@ -4,9 +4,12 @@ import java.io.File;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 public class Tree extends JTree {
-
     private static final long serialVersionUID = 42L;
     public Panel panel;
     public MainFrame frame;
@@ -60,7 +63,14 @@ public class Tree extends JTree {
         for (String token : tokens) {
             newPath = newPath + token + "/";
         }
-
         return newPath;
+    }
+}
+// called when selected a tree node
+class SelectionListener implements TreeSelectionListener {
+    public void valueChanged(TreeSelectionEvent se) {
+        Tree tree = (Tree) se.getSource();
+        String path = tree.refreshTree(tree);
+        tree.panel.refreshPanel(path);
     }
 }

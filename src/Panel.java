@@ -1,10 +1,11 @@
 import java.io.*;
 import javax.swing.JPanel;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.AbstractButton;
+import java.awt.*;
 
 public class Panel extends JPanel {
 
@@ -13,21 +14,17 @@ public class Panel extends JPanel {
     private JButton file;
 
     public void setPanel () {
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new ModifiedFlowLayout(ModifiedFlowLayout.LEFT));
     }
 
     //add buttons/files to panel
-    public void addButtons(String path) {
+    public void refreshPanel(String path) {
         File directory = new File(path);
         files = directory.listFiles();
 
         removeAll();
-
         for (File curr : files) {
-            file = new JButton(curr.getName());
-            add(file);
-            //add(Box.createHorizontalGlue());
-            add(Box.createRigidArea(new Dimension(50,0)));
+            add(new Button(curr));
         }
         updateUI();
     }
