@@ -11,7 +11,7 @@ public class MainFrame extends JFrame{
     private static final long serialVersionUID = 42L;
     private JSplitPane splitPane;
     private Tree tree;
-    private JPanel panel;
+    private Panel panel;
     private JScrollPane treeView;
     private JScrollPane panelView;
 
@@ -21,9 +21,14 @@ public class MainFrame extends JFrame{
         treeView = new JScrollPane(tree);
 
         panel = new Panel();
-        panelView = new JScrollPane(panel);
+        panelView = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                           JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);
+
+        panel.setPanel();
+        panel.addButtons("/home/aris/Documents/ce325/hw3/file_browser");
+
         setSize(WIDTH,HEIGHT);
         setTitle("File Browser");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
