@@ -1,8 +1,7 @@
 import javax.swing.JFrame;
-import javax.swing.JButton;
 import javax.swing.JSplitPane;
-import javax.swing.JTree;
 import javax.swing.JScrollPane;
+import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 public class MainFrame extends JFrame{
@@ -11,16 +10,20 @@ public class MainFrame extends JFrame{
 
     private static final long serialVersionUID = 42L;
     private JSplitPane splitPane;
-    private JTree tree;
+    private Tree tree;
+    private JPanel panel;
     private JScrollPane treeView;
+    private JScrollPane panelView;
 
     public void setFrame() {
 
-        tree = new JTree();
+        tree = new Tree();
         treeView = new JScrollPane(tree);
 
-        splitPane = new JSplitPane();
-        splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+        panel = new Panel();
+        panelView = new JScrollPane(panel);
+
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);
         setSize(WIDTH,HEIGHT);
         setTitle("File Browser");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
