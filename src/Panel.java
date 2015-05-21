@@ -21,11 +21,14 @@ public class Panel extends JPanel {
         File directory = new File(path);
         files = directory.listFiles();
 
+        removeAll();
+
         for (File curr : files) {
             file = new JButton(curr.getName());
             add(file);
             //add(Box.createHorizontalGlue());
             add(Box.createRigidArea(new Dimension(50,0)));
         }
+        updateUI();
     }
 }

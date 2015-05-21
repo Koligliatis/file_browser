@@ -8,7 +8,8 @@ public class SelectionListener implements TreeSelectionListener {
     public void valueChanged(TreeSelectionEvent se) {
 
         Tree tree = (Tree) se.getSource();
-        tree.refreshTree(tree);
-
+        String path = tree.refreshTree(tree);
+        System.out.println(path);
+        tree.panel.addButtons(path);
     }
 }

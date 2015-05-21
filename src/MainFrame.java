@@ -16,18 +16,17 @@ public class MainFrame extends JFrame{
 
     public void setFrame() {
 
-        tree = new Tree();
-        treeView = new JScrollPane(tree);
-
         panel = new Panel();
         panelView = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panel.setPanel();
+
+        tree = new Tree(panel,this);
+        treeView = new JScrollPane(tree);
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);
         splitPane.setDividerLocation(250 + splitPane.getInsets().left);
 
-        panel.setPanel();
-        panel.addButtons("/");
 
         setSize(WIDTH,HEIGHT);
         setTitle("File Browser");

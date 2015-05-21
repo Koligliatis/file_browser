@@ -8,9 +8,13 @@ import java.awt.Color;
 public class Tree extends JTree {
 
     private static final long serialVersionUID = 42L;
+    public Panel panel;
+    public MainFrame frame;
 
-    public Tree () {
+    public Tree (Panel panel,MainFrame frame) {
         super(new DefaultMutableTreeNode("root"));
+        this.panel = panel;
+        this.frame = frame;
         addTreeSelectionListener(new SelectionListener());
         // sets icons for tree's nodes
         DefaultTreeCellRenderer tRenderer =
@@ -24,7 +28,7 @@ public class Tree extends JTree {
         setCellRenderer(tRenderer);
     }
     // searchs path for directories and adds childs to selected node
-    public void refreshTree(Tree tree) {
+    public String refreshTree(Tree tree) {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
                   .getLastSelectedPathComponent();
         String path = tree.getSelectionPath().toString();
@@ -39,6 +43,8 @@ public class Tree extends JTree {
                 }
             }
         }
+
+        return path;
     }
     // makes path from treePath
     private String makePath(String path) {
