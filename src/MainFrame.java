@@ -1,7 +1,6 @@
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 public class MainFrame extends JFrame{
@@ -25,9 +24,10 @@ public class MainFrame extends JFrame{
                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);
+        splitPane.setDividerLocation(250 + splitPane.getInsets().left);
 
         panel.setPanel();
-        panel.addButtons("/home/aris/Documents/ce325/hw3/file_browser");
+        panel.addButtons("/");
 
         setSize(WIDTH,HEIGHT);
         setTitle("File Browser");
