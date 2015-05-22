@@ -2,6 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame{
     public static final int WIDTH = 1400;
@@ -31,6 +32,7 @@ public class MainFrame extends JFrame{
         ToolBar toolbar = new ToolBar();
         add(toolbar, BorderLayout.NORTH);
 
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/Folder-plain-iconSm.png")));
         setSize(WIDTH,HEIGHT);
         setTitle("File Browser");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
