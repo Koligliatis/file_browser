@@ -28,6 +28,9 @@ public class MainFrame extends JFrame{
 
         setJMenuBar(new MenuBar());
 
+        ToolBar toolbar = new ToolBar();
+        add(toolbar, BorderLayout.NORTH);
+
         setSize(WIDTH,HEIGHT);
         setTitle("File Browser");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
