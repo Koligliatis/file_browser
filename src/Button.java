@@ -8,8 +8,13 @@ public class Button extends JButton {
     private File file;
     private String path;
 
-    public Button (File file, String path) {
-        ImageIcon icon = new ImageIcon( System.getProperty("user.dir")+"/icons/Folder-plain-iconL.png" );
+    public Button (File file, String path, String layout) {
+        ImageIcon icon;
+        if (layout.equals("FLOW") ) {
+            icon = new ImageIcon( System.getProperty("user.dir")+"/icons/Folder-plain-iconL.png" );
+        }else {
+            icon = new ImageIcon( System.getProperty("user.dir")+"/icons/Folder-plain-icon.png" );
+        }
         setIcon(icon);
         setText(file.getName());
         setVerticalTextPosition(AbstractButton.BOTTOM);

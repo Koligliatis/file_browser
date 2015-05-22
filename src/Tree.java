@@ -71,6 +71,6 @@ class SelectionListener implements TreeSelectionListener {
     public void valueChanged(TreeSelectionEvent se) {
         Tree tree = (Tree) se.getSource();
         String path = tree.refreshTree(tree);
-        tree.panel.refreshPanel(path);
+        tree.panel.refresh(path);
     }
 }
