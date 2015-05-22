@@ -22,7 +22,7 @@ public class Tree extends JTree {
         // sets icons for tree's nodes
         DefaultTreeCellRenderer tRenderer =
         new DefaultTreeCellRenderer();
-        ImageIcon folderIcon = new ImageIcon( System.getProperty("user.dir")+"/icons/Folder-plain-icon.png" );
+        ImageIcon folderIcon = new ImageIcon( System.getProperty("user.dir")+"/icons/Folder-plain-iconS.png" );
         //ImageIcon folderIcon = new ImageIcon( System.getProperty("user.dir")+"/icons/Close-Folder-icon.png" );
         tRenderer.setLeafIcon( folderIcon );
         tRenderer.setClosedIcon( folderIcon );
