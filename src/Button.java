@@ -20,6 +20,7 @@ public class Button extends JButton {
             str = new String("S");
             setPreferredSize(new Dimension(50,50 ));
         }
+
         if (file.isDirectory()) {
             icon = new ImageIcon( System.getProperty("user.dir")+"/icons/Folder-plain-icon"+str+".png" );
         }
@@ -42,8 +43,22 @@ public class Button extends JButton {
                                      +"/icons/unknown.png");
             }
         }
+
+        String text = "";
+        for (char ch: file.getName().toCharArray()) {
+            if (text.length() % 10 == 0) {
+                text = text + "\n" + ch;
+            }
+            else {
+                text = text + ch;
+            }
+        }
+
+        System.out.println(text);
+
         setIcon(icon);
-        setText(file.getName());
+        //setText(file.getName());
+        setText(text);
         setVerticalTextPosition(AbstractButton.BOTTOM);
         setHorizontalTextPosition(AbstractButton.CENTER);
         setOpaque(false);
