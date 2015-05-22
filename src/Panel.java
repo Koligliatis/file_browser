@@ -24,7 +24,7 @@ public class Panel extends JPanel {
 
         removeAll();
         for (File curr : files) {
-            add(new Button(curr));
+            add(new Button(curr,path));
         }
         updateUI();
     }
