@@ -8,6 +8,8 @@ import javax.swing.AbstractButton;
 import java.awt.*;
 import javax.swing.*;
 import java.text.*;
+import java.awt.event.*;
+import java.awt.event.MouseEvent;
 
 public class Panel extends JPanel {
 
@@ -17,16 +19,19 @@ public class Panel extends JPanel {
     private String panelType;
     private JPanel filePanel;
     private SimpleDateFormat ft;
+    private PopupMenu popup;
 
     public void buildFlowPanel() {
         panelType = "FLOW";
         setLayout(new ModifiedFlowLayout(ModifiedFlowLayout.LEFT));
+        showPopupMenu();
     }
 
     public void buildListPanel() {
         panelType = "LIST";
         ft = new SimpleDateFormat("E',' dd MMMM yyyy hh:mm:ss 'GMT' ");
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        showPopupMenu();
     }
 
     public void refresh(String path) {
@@ -59,7 +64,33 @@ public class Panel extends JPanel {
         updateUI();
     }
 
+    public void showPopupMenu() {
+        popup = new PopupMenu();
+        popup.setMenuItem("Create New Folder");
+        MouseListener popupListener = new PopupListener(popup);
+        addMouseListener(popupListener);
+    }
+
     public void addFile() {
 
+    }
+}
+
+class PopupListener extends MouseAdapter {
+    JPopupMenu popup;
+    PopupListener(JPopupMenu popupMenu) {
+        popup = popupMenu;
+    }
+    public void mousePressed(MouseEvent e) {
+        maybeShowPopup(e);
+    }
+    public void mouseReleased(MouseEvent e) {
+         maybeShowPopup(e);
+    }
+    private void maybeShowPopup(MouseEvent e) {
+        if (e.isPopupTrigger()) {
+             popup.show(e.getComponent(),
+             e.getX(), e.getY());
+        }
     }
 }
