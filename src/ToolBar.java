@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.awt.event.ActionEvent;
+import java.awt.*;
 
 public class ToolBar extends JToolBar implements ActionListener {
 
@@ -15,6 +16,9 @@ public class ToolBar extends JToolBar implements ActionListener {
     private JButton computer;
     private JButton iconview;
     private JButton listview;
+    private JButton search;
+    private JTextField searchField;
+    private JPanel searchPanel;
 
     private Tree tree;
     private Panel panel;
@@ -39,6 +43,16 @@ public class ToolBar extends JToolBar implements ActionListener {
         iconview = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/list_view.png");
         listview = new JButton(icon);
+        icon = new ImageIcon("icons/toolbar/Search.png");
+        search = new JButton(icon);
+
+        searchPanel = new JPanel();
+        searchPanel.setMaximumSize(new Dimension(400,100));
+        searchField = new JTextField(90);
+        searchPanel.add(Box.createHorizontalGlue());
+        searchPanel.add(searchField);
+        searchPanel.add(Box.createHorizontalGlue());
+        searchPanel.setOpaque(false);
 
         iconview.setToolTipText("Icon View");
         iconview.setBorderPainted(false);
@@ -75,6 +89,11 @@ public class ToolBar extends JToolBar implements ActionListener {
         computer.setRequestFocusEnabled(false);
         computer.setOpaque(false);
 
+        search.setToolTipText("Go to Computer");
+        search.setBorderPainted(false);
+        search.setRequestFocusEnabled(false);
+        search.setOpaque(false);
+
         back.addActionListener(this);
         front.addActionListener(this);
         refresh.addActionListener(this);
@@ -82,6 +101,7 @@ public class ToolBar extends JToolBar implements ActionListener {
         home.addActionListener(this);
         iconview.addActionListener(this);
         listview.addActionListener(this);
+        search.addActionListener(this);
 
         addSeparator();
         add(back);
@@ -94,6 +114,12 @@ public class ToolBar extends JToolBar implements ActionListener {
         addSeparator();
         add(computer);
         add(new JSeparator(SwingConstants.VERTICAL));
+        addSeparator();
+        add(searchPanel);
+        addSeparator();
+        add(search);
+        addSeparator();
+        addSeparator();
         add(iconview);
         addSeparator();
         add(listview);
@@ -101,23 +127,33 @@ public class ToolBar extends JToolBar implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         JButton pressedButton = (JButton) e.getSource();
-
+        //BACK BUTTON
         if (pressedButton == back) {
             System.out.println("Back");
+        //FRONT BUTTON
         } else if (pressedButton == front) {
             System.out.println("Front");
+        //REFRESH BUTTON
         } else if (pressedButton == refresh) {
             int [] sel = tree.getSelectionRows();
             tree.setSelectionRow(0);
             tree.setSelectionRows(sel);
+        //HOME BUTTON
         } else if (pressedButton == home) {
             tree.setTree("home");
+        //COMPUTER BUTTON
         } else if (pressedButton == computer) {
             System.out.println("Computer");
+        //SEARCH BUTTON
+        } else if (pressedButton == search) {
+            String searchPath = searchField.getText();
+            System.out.println(searchPath);
+        //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
             panel.buildFlowPanel();
             String path = tree.refresh();
             tree.panel.refresh(path);
+        //LISTVIEW BUTTON
         } else if (pressedButton == listview) {
             panel.buildListPanel();
             String path = tree.refresh();
