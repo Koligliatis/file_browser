@@ -2,29 +2,43 @@ import java.io.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.*;
+import java.awt.event.ActionEvent;
 
 public class ToolBar extends JToolBar implements ActionListener {
 
     private static final long serialVersionUID = 42L;
 
-    public ToolBar() {
+    private JButton back;
+    private JButton front;
+    private JButton refresh;
+    private JButton home;
+    private JButton computer;
+    private JButton iconview;
+    private JButton listview;
+
+    private Tree tree;
+    private Panel panel;
+
+    public ToolBar(Tree tree, Panel panel) {
+        this.tree = tree;
+        this.panel = panel;
         setFloatable( false);
         ImageIcon icon;
 
         icon = new ImageIcon("icons/toolbar/Back.png");
-        JButton back = new JButton(icon);
+        back = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/Front.png");
-        JButton front = new JButton(icon);
+        front = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/refresh.png");
-        JButton refresh = new JButton(icon);
+        refresh = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/Deep_Home.png");
-        JButton home = new JButton(icon);
+        home = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/Deep_Computer.png");
-        JButton computer = new JButton(icon);
+        computer = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/icon_view.png");
-        JButton iconview = new JButton(icon);
+        iconview = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/list_view.png");
-        JButton listview = new JButton(icon);
+        listview = new JButton(icon);
 
         iconview.setToolTipText("Icon View");
         iconview.setBorderPainted(false);
@@ -86,6 +100,28 @@ public class ToolBar extends JToolBar implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        JButton pressedButton = (JButton) e.getSource();
 
+        if (pressedButton == back) {
+            System.out.println("Back");
+        } else if (pressedButton == front) {
+            System.out.println("Front");
+        } else if (pressedButton == refresh) {
+            int [] sel = tree.getSelectionRows();
+            tree.setSelectionRow(0);
+            tree.setSelectionRows(sel);
+        } else if (pressedButton == home) {
+            tree.setTree("home");
+        } else if (pressedButton == computer) {
+            System.out.println("Computer");
+        } else if (pressedButton == iconview) {
+            panel.buildFlowPanel();
+            String path = tree.refresh();
+            tree.panel.refresh(path);
+        } else if (pressedButton == listview) {
+            panel.buildListPanel();
+            String path = tree.refresh();
+            tree.panel.refresh(path);
+        }
     }
 }

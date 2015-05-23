@@ -8,14 +8,18 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
+import javax.swing.tree.*;
+import java.util.*;
 
 public class Tree extends JTree {
     private static final long serialVersionUID = 42L;
     public Panel panel;
     public MainFrame frame;
+    public DefaultMutableTreeNode root;
 
-    public Tree (Panel panel,MainFrame frame) {
-        super(new DefaultMutableTreeNode("root"));
+    public Tree (DefaultMutableTreeNode root,Panel panel,MainFrame frame) {
+        super(root);
+        this.root = root;
         this.panel = panel;
         this.frame = frame;
         addTreeSelectionListener(new SelectionListener());
@@ -31,10 +35,10 @@ public class Tree extends JTree {
         setCellRenderer(tRenderer);
     }
     // searchs path for directories and adds childs to selected node
-    public String refreshTree(Tree tree) {
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
+    public String refresh() {
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) this
                   .getLastSelectedPathComponent();
-        String path = tree.getSelectionPath().toString();
+        String path = this.getSelectionPath().toString();
         path = makePath(path);
         File directory = new File(path);
         File files [] = directory.listFiles();
@@ -46,9 +50,25 @@ public class Tree extends JTree {
                 }
             }
         }
-
         return path;
     }
+    public void setTree(String path) {
+        TreePath treepath = find(path);
+        setSelectionPath(treepath);
+    }
+    // find tree path by string
+    public TreePath find(String s) {
+        @SuppressWarnings("unchecked")
+        Enumeration<DefaultMutableTreeNode> e = root.depthFirstEnumeration();
+        while (e.hasMoreElements()) {
+            DefaultMutableTreeNode node = e.nextElement();
+            if (node.toString().equalsIgnoreCase(s)) {
+                    return new TreePath(node.getPath());
+            }
+        }
+        return null;
+    }
+
     // makes path from treePath
     private String makePath(String path) {
         String newPath = "";
@@ -70,7 +90,7 @@ public class Tree extends JTree {
 class SelectionListener implements TreeSelectionListener {
     public void valueChanged(TreeSelectionEvent se) {
         Tree tree = (Tree) se.getSource();
-        String path = tree.refreshTree(tree);
+        String path = tree.refresh();
         tree.panel.refresh(path);
     }
 }

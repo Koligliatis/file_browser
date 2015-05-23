@@ -40,7 +40,7 @@ public class Button extends JButton {
                                          +"/"+iconPath);
             }else {
                 icon = new ImageIcon(System.getProperty("user.dir")
-                                     +"/icons/unknown.png");
+                                     +"/icons/unknown"+str+".png");
             }
         }
 
