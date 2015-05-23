@@ -54,8 +54,6 @@ public class Button extends JButton {
             }
         }
 
-        System.out.println(text);
-
         setIcon(icon);
         //setText(file.getName());
         setText(text);
