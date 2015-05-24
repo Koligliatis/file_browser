@@ -3,6 +3,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class MainFrame extends JFrame{
     public static final int WIDTH = 1400;
@@ -14,6 +15,9 @@ public class MainFrame extends JFrame{
     private Panel panel;
     private JScrollPane treeView;
     private JScrollPane panelView;
+    private DefaultMutableTreeNode root;
+
+    private ActionCenter action;
 
     public void setFrame() {
 
@@ -21,7 +25,8 @@ public class MainFrame extends JFrame{
         panel.buildFlowPanel();
         panelView = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        tree = new Tree(panel,this);
+        root = new DefaultMutableTreeNode("root");
+        tree = new Tree(root,panel,this);
         treeView = new JScrollPane(tree);
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);
@@ -29,8 +34,13 @@ public class MainFrame extends JFrame{
 
         setJMenuBar(new MenuBar());
 
-        ToolBar toolbar = new ToolBar();
+        ToolBar toolbar = new ToolBar(tree,panel);
         add(toolbar, BorderLayout.NORTH);
+
+        action = new ActionCenter(tree, panel, toolbar, this);
+        panel.setActionCenter(action);
+        tree.setActionCenter(action);
+        toolbar.setActionCenter(action);
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/Folder-plain-iconSm.png")));
         setSize(WIDTH,HEIGHT);

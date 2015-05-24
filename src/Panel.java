@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.text.*;
 import java.awt.event.*;
 import java.awt.event.MouseEvent;
+import java.awt.*;
 
 public class Panel extends JPanel {
 
@@ -20,6 +21,12 @@ public class Panel extends JPanel {
     private JPanel filePanel;
     private SimpleDateFormat ft;
     private PopupMenu popup;
+    private ActionCenter action;
+    public String currentPath;
+
+    public void setActionCenter(ActionCenter action) {
+        this.action = action;
+    }
 
     public void buildFlowPanel() {
         panelType = "FLOW";
@@ -30,11 +37,13 @@ public class Panel extends JPanel {
     public void buildListPanel() {
         panelType = "LIST";
         ft = new SimpleDateFormat("E',' dd MMMM yyyy hh:mm:ss 'GMT' ");
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         showPopupMenu();
     }
 
     public void refresh(String path) {
+        currentPath = path;
+        action.refreshFrame();
         File directory = new File(path);
         files = directory.listFiles();
 
@@ -52,6 +61,7 @@ public class Panel extends JPanel {
                 filePanel.setLayout(new GridLayout(1,4));
                 filePanel.add(new Button(curr,path,panelType));
                 filePanel.add(new JLabel((String.valueOf(curr.length()))));
+                filePanel.setMaximumSize(new Dimension(1800,30));
                 if(curr.isDirectory()) {
                     filePanel.add(new JLabel("Folder"));
                 }else {
