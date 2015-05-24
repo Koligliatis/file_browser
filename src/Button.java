@@ -4,14 +4,21 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import javax.imageio.*;
+import javax.swing.tree.*;
 
 public class Button extends JButton {
     private static final long serialVersionUID = 42L;
     private File file;
     private String path;
+    private TreePath treepath;
     private ImageIcon icon;
+    private ActionCenter action;
 
-    public Button (File file, String path, String layout) {
+    public Button (ActionCenter action, File file, String path, TreePath treepath, String layout) {
+        this.action = action;
+        this.file = file;
+        this.path = path;
+        this.treepath = treepath;
         String str = "";
         if (layout.equals("FLOW")) {
             str = new String("");
@@ -64,19 +71,32 @@ public class Button extends JButton {
         setOpaque(false);
         setContentAreaFilled(false);
         setBorderPainted(false);
-        addActionListener(new ButtonActionListener());
+        addActionListener(new ButtonActionListener(action, this));
     }
 
     public File getButtonFile() {
         return file;
     }
-
     public String getButtonPath() {
         return path;
     }
+    public TreePath getButtonTreePath() {
+        return treepath;
+    }
 }
-
+// If button selected:
+// if button's file is directory open and refresh frame
+// else run the with a program
 class ButtonActionListener implements ActionListener {
+    private ActionCenter action;
+    private Button button;
+    public ButtonActionListener(ActionCenter action, Button button) {
+        this.action = action;
+        this.button = button;
+    }
     public void actionPerformed(ActionEvent e) {
+        if (button.getButtonFile().isDirectory()) {
+            action.refreshFrameFromButton(button);
+        }
     }
 }

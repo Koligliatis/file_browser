@@ -14,14 +14,12 @@ import java.util.*;
 public class Tree extends JTree {
     private static final long serialVersionUID = 42L;
     private ActionCenter action;
-    public Panel panel;
     public MainFrame frame;
     public DefaultMutableTreeNode root;
 
-    public Tree (DefaultMutableTreeNode root,Panel panel,MainFrame frame) {
+    public Tree (DefaultMutableTreeNode root,MainFrame frame) {
         super(root);
         this.root = root;
-        this.panel = panel;
         this.frame = frame;
         // sets icons for tree's nodes
         DefaultTreeCellRenderer tRenderer =
@@ -57,6 +55,14 @@ public class Tree extends JTree {
     }
     // find tree path by string
     public TreePath findTreePath(String s) {
+
+        //Enumeration children = root.children();
+        //while (true) {
+        //    while (children.hasMoreElements()) {
+        //        if
+        //    }
+        //}
+
         @SuppressWarnings("unchecked")
         Enumeration<DefaultMutableTreeNode> e = root.depthFirstEnumeration();
         while (e.hasMoreElements()) {
