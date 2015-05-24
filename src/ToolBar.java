@@ -149,7 +149,7 @@ public class ToolBar extends JToolBar implements ActionListener {
             action.tree.setSelectionRows(sel);
         //HOME BUTTON
         } else if (pressedButton == home) {
-            action.tree.setTree("home");
+            action.setSelectedPath("home");
         //COMPUTER BUTTON
         } else if (pressedButton == computer) {
             System.out.println("Computer");
@@ -159,13 +159,11 @@ public class ToolBar extends JToolBar implements ActionListener {
         //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
             action.panel.buildFlowPanel();
-            String path = action.tree.refresh();
-            action.tree.panel.refresh(path);
+            action.refreshFrameFromTree();
         //LISTVIEW BUTTON
         } else if (pressedButton == listview) {
             action.panel.buildListPanel();
-            String path = action.tree.refresh();
-            action.tree.panel.refresh(path);
+            action.refreshFrameFromTree();
         }
     }
 }

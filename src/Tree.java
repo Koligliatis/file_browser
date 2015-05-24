@@ -23,7 +23,6 @@ public class Tree extends JTree {
         this.root = root;
         this.panel = panel;
         this.frame = frame;
-        addTreeSelectionListener(new SelectionListener());
         // sets icons for tree's nodes
         DefaultTreeCellRenderer tRenderer =
         new DefaultTreeCellRenderer();
@@ -37,10 +36,11 @@ public class Tree extends JTree {
     }
     public void setActionCenter(ActionCenter action) {
         this.action = action;
+        addTreeSelectionListener(new SelectionListener(action));
     }
     // Set tree state from last selected node.
-    // Explore child's node and add it to tree
-    public String refresh() {
+    // Explore child's node and add it to treepublic void setTreeState() {
+    public void setState() {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)
                   getLastSelectedPathComponent();
         String path = action.treePathToString(getSelectionPath());
@@ -54,14 +54,9 @@ public class Tree extends JTree {
                 }
             }
         }
-        return path;
-    }
-    public void setTree(String path) {
-        TreePath treepath = find(path);
-        setSelectionPath(treepath);
     }
     // find tree path by string
-    public TreePath find(String s) {
+    public TreePath findTreePath(String s) {
         @SuppressWarnings("unchecked")
         Enumeration<DefaultMutableTreeNode> e = root.depthFirstEnumeration();
         while (e.hasMoreElements()) {
@@ -75,9 +70,11 @@ public class Tree extends JTree {
 }
 // called when selected a tree node
 class SelectionListener implements TreeSelectionListener {
+    private ActionCenter action;
+    public SelectionListener(ActionCenter action) {
+        this.action = action;
+    }
     public void valueChanged(TreeSelectionEvent se) {
-        Tree tree = (Tree) se.getSource();
-        String path = tree.refresh();
-        tree.panel.refresh(path);
+       action.refreshFrameFromTree();
     }
 }

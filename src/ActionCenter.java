@@ -2,6 +2,7 @@ import javax.swing.tree.*;
 import java.util.*;
 import java.io.*;
 
+// Contains the basic interaction of components
 public class ActionCenter {
     public Tree tree;
     public Panel panel;
@@ -13,6 +14,20 @@ public class ActionCenter {
         this.panel = panel;
         this.toolbar = toolbar;
         this.frame = frame;
+    }
+    // Refresh frame frome tree state
+    // Get path of selected node and refresh panel
+    public void refreshFrameFromTree() {
+        tree.setState();
+        String path = treePathToString(tree.getSelectionPath());
+        panel.refresh(path);
+        refreshSearchField();
+    }
+    // Finds tree path from regular path
+    // and fires tree action event with this tree path
+    public void setSelectedPath(String path) {
+        TreePath treepath = tree.findTreePath(path);
+        tree.setSelectionPath(treepath);
     }
     // Set search field text base on current path
     public void refreshSearchField() {
@@ -36,15 +51,6 @@ public class ActionCenter {
             newPath = newPath + token + "/";
         }
         return newPath;
-    }
-
-    // refresh action's center tree
-    public String refreshTree() {
-        return tree.refresh();
-    }
-    public void setTree(String path) {
-        TreePath treepath = tree.find(path);
-        tree.setSelectionPath(treepath);
     }
     // set layout of action's center panel
     public void setPanelLayout(String layout) {

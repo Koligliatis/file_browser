@@ -43,7 +43,6 @@ public class Panel extends JPanel {
 
     public void refresh(String path) {
         currentPath = path;
-        action.refreshSearchField();
         File directory = new File(path);
         files = directory.listFiles();
 
