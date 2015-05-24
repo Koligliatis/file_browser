@@ -21,7 +21,12 @@ public class Panel extends JPanel {
     private JPanel filePanel;
     private SimpleDateFormat ft;
     private PopupMenu popup;
-    private String currentPath;
+    private ActionCenter action;
+    public String currentPath;
+
+    public void setActionCenter(ActionCenter action) {
+        this.action = action;
+    }
 
     public void buildFlowPanel() {
         panelType = "FLOW";
@@ -38,6 +43,7 @@ public class Panel extends JPanel {
 
     public void refresh(String path) {
         currentPath = path;
+        action.refreshFrame();
         File directory = new File(path);
         files = directory.listFiles();
 

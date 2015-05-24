@@ -29,7 +29,6 @@ public class MainFrame extends JFrame{
         tree = new Tree(root,panel,this);
         treeView = new JScrollPane(tree);
 
-        action = new ActionCenter(tree,panel);
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);
         splitPane.setDividerLocation(250 + splitPane.getInsets().left);
 
@@ -37,6 +36,11 @@ public class MainFrame extends JFrame{
 
         ToolBar toolbar = new ToolBar(tree,panel);
         add(toolbar, BorderLayout.NORTH);
+
+        action = new ActionCenter(tree, panel, toolbar, this);
+        panel.setActionCenter(action);
+        tree.setActionCenter(action);
+        toolbar.setActionCenter(action);
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/Folder-plain-iconSm.png")));
         setSize(WIDTH,HEIGHT);

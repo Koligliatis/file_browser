@@ -13,6 +13,7 @@ import java.util.*;
 
 public class Tree extends JTree {
     private static final long serialVersionUID = 42L;
+    private ActionCenter action;
     public Panel panel;
     public MainFrame frame;
     public DefaultMutableTreeNode root;
@@ -33,6 +34,9 @@ public class Tree extends JTree {
         tRenderer.setOpenIcon( folderIcon );
         tRenderer.setTextSelectionColor(Color.RED);
         setCellRenderer(tRenderer);
+    }
+    public void setActionCenter(ActionCenter action) {
+        this.action = action;
     }
     // searchs path for directories and adds childs to selected node
     public String refresh() {

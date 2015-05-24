@@ -17,11 +17,12 @@ public class ToolBar extends JToolBar implements ActionListener {
     private JButton iconview;
     private JButton listview;
     private JButton search;
-    private JTextField searchField;
     private JPanel searchPanel;
+    public JTextField searchField;
 
     private Tree tree;
     private Panel panel;
+    private ActionCenter action;
 
     public ToolBar(Tree tree, Panel panel) {
         this.tree = tree;
@@ -125,6 +126,10 @@ public class ToolBar extends JToolBar implements ActionListener {
         add(listview);
     }
 
+    public void setActionCenter(ActionCenter action) {
+        this.action = action;
+    }
+
     public void actionPerformed(ActionEvent e) {
         JButton pressedButton = (JButton) e.getSource();
         //BACK BUTTON
@@ -147,7 +152,6 @@ public class ToolBar extends JToolBar implements ActionListener {
         //SEARCH BUTTON
         } else if (pressedButton == search) {
             String searchPath = searchField.getText();
-            System.out.println(searchPath);
         //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
             panel.buildFlowPanel();
