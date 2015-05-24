@@ -33,13 +33,14 @@ public class MainFrame extends JFrame{
 
         setJMenuBar(new MenuBar());
 
-        ToolBar toolbar = new ToolBar(tree,panel);
+        ToolBar toolbar = new ToolBar();
         add(toolbar, BorderLayout.NORTH);
 
         action = new ActionCenter(tree, panel, toolbar, this);
         panel.setActionCenter(action);
         tree.setActionCenter(action);
         toolbar.setActionCenter(action);
+        panel.buildFlowPanel();
 
         panel.buildFlowPanel();
 

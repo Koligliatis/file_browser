@@ -23,7 +23,6 @@ public class Tree extends JTree {
         this.root = root;
         this.panel = panel;
         this.frame = frame;
-        addTreeSelectionListener(new SelectionListener());
         // sets icons for tree's nodes
         DefaultTreeCellRenderer tRenderer =
         new DefaultTreeCellRenderer();
@@ -37,13 +36,14 @@ public class Tree extends JTree {
     }
     public void setActionCenter(ActionCenter action) {
         this.action = action;
+        addTreeSelectionListener(new SelectionListener(action));
     }
-    // searchs path for directories and adds childs to selected node
-    public String refresh() {
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) this
-                  .getLastSelectedPathComponent();
-        String path = this.getSelectionPath().toString();
-        path = makePath(path);
+    // Set tree state from last selected node.
+    // Explore child's node and add it to treepublic void setTreeState() {
+    public void setState() {
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)
+                  getLastSelectedPathComponent();
+        String path = action.treePathToString(getSelectionPath());
         File directory = new File(path);
         File files [] = directory.listFiles();
 
@@ -54,14 +54,9 @@ public class Tree extends JTree {
                 }
             }
         }
-        return path;
-    }
-    public void setTree(String path) {
-        TreePath treepath = find(path);
-        setSelectionPath(treepath);
     }
     // find tree path by string
-    public TreePath find(String s) {
+    public TreePath findTreePath(String s) {
         @SuppressWarnings("unchecked")
         Enumeration<DefaultMutableTreeNode> e = root.depthFirstEnumeration();
         while (e.hasMoreElements()) {
@@ -72,29 +67,14 @@ public class Tree extends JTree {
         }
         return null;
     }
-
-    // makes path from treePath
-    private String makePath(String path) {
-        String newPath = "";
-        path = path.replaceAll("\\]","");
-        path = path.replaceAll("\\[","");
-        String tokens [] = path.split("\\, ");
-
-        if (tokens[0].equals("root")) {
-            tokens[0] = "";
-        }
-
-        for (String token : tokens) {
-            newPath = newPath + token + "/";
-        }
-        return newPath;
-    }
 }
 // called when selected a tree node
 class SelectionListener implements TreeSelectionListener {
+    private ActionCenter action;
+    public SelectionListener(ActionCenter action) {
+        this.action = action;
+    }
     public void valueChanged(TreeSelectionEvent se) {
-        Tree tree = (Tree) se.getSource();
-        String path = tree.refresh();
-        tree.panel.refresh(path);
+       action.refreshFrameFromTree();
     }
 }

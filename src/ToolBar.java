@@ -18,15 +18,11 @@ public class ToolBar extends JToolBar implements ActionListener {
     private JButton listview;
     private JButton search;
     private JPanel searchPanel;
-    public JTextField searchField;
+    private JTextField searchField;
 
-    private Tree tree;
-    private Panel panel;
     private ActionCenter action;
 
-    public ToolBar(Tree tree, Panel panel) {
-        this.tree = tree;
-        this.panel = panel;
+    public ToolBar() {
         setFloatable( false);
         ImageIcon icon;
 
@@ -126,6 +122,14 @@ public class ToolBar extends JToolBar implements ActionListener {
         add(listview);
     }
 
+    public JTextField getSearchField() {
+        return searchField;
+    }
+
+    public void setSearchField(String path) {
+        searchField.setText(path);
+    }
+
     public void setActionCenter(ActionCenter action) {
         this.action = action;
     }
@@ -140,12 +144,12 @@ public class ToolBar extends JToolBar implements ActionListener {
             System.out.println("Front");
         //REFRESH BUTTON
         } else if (pressedButton == refresh) {
-            int [] sel = tree.getSelectionRows();
-            tree.setSelectionRow(0);
-            tree.setSelectionRows(sel);
+            int [] sel = action.tree.getSelectionRows();
+            action.tree.setSelectionRow(0);
+            action.tree.setSelectionRows(sel);
         //HOME BUTTON
         } else if (pressedButton == home) {
-            tree.setTree("home");
+            action.setSelectedPath("home");
         //COMPUTER BUTTON
         } else if (pressedButton == computer) {
             System.out.println("Computer");
@@ -154,14 +158,12 @@ public class ToolBar extends JToolBar implements ActionListener {
             String searchPath = searchField.getText();
         //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
-            panel.buildFlowPanel();
-            String path = tree.refresh();
-            tree.panel.refresh(path);
+            action.panel.buildFlowPanel();
+            action.refreshFrameFromTree();
         //LISTVIEW BUTTON
         } else if (pressedButton == listview) {
-            panel.buildListPanel();
-            String path = tree.refresh();
-            tree.panel.refresh(path);
+            action.panel.buildListPanel();
+            action.refreshFrameFromTree();
         }
     }
 }

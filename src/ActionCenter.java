@@ -2,6 +2,7 @@ import javax.swing.tree.*;
 import java.util.*;
 import java.io.*;
 
+// Contains the basic interaction of components
 public class ActionCenter {
     public Tree tree;
     public Panel panel;
@@ -14,18 +15,42 @@ public class ActionCenter {
         this.toolbar = toolbar;
         this.frame = frame;
     }
-
-    public void refreshFrame() {
-        toolbar.searchField.setText(panel.currentPath);
+    // Refresh frame frome tree state
+    // Get path of selected node and refresh panel
+    public void refreshFrameFromTree() {
+        tree.setState();
+        String path = treePathToString(tree.getSelectionPath());
+        panel.refresh(path);
+        refreshSearchField();
     }
-
-    // refresh action's center tree
-    public String refreshTree() {
-        return tree.refresh();
-    }
-    public void setTree(String path) {
-        TreePath treepath = tree.find(path);
+    // Finds tree path from regular path
+    // and fires tree action event with this tree path
+    public void setSelectedPath(String path) {
+        TreePath treepath = tree.findTreePath(path);
         tree.setSelectionPath(treepath);
+    }
+    // Set search field text base on current path
+    public void refreshSearchField() {
+        toolbar.setSearchField(panel.currentPath);
+    }
+    // Return current path in string
+    public String getCurrentPath() {
+        return panel.currentPath;
+    }
+    // Convert TreePath to string
+    public String treePathToString(TreePath treepath) {
+        String newPath = "";
+        String path = treepath.toString();
+        path = path.replaceAll("\\]","");
+        path = path.replaceAll("\\[","");
+        String tokens [] = path.split("\\, ");
+        if (tokens[0].equals("root")) {
+            tokens[0] = "";
+        }
+        for (String token : tokens) {
+            newPath = newPath + token + "/";
+        }
+        return newPath;
     }
     // set layout of action's center panel
     public void setPanelLayout(String layout) {
