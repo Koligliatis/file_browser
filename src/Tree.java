@@ -38,12 +38,12 @@ public class Tree extends JTree {
     public void setActionCenter(ActionCenter action) {
         this.action = action;
     }
-    // searchs path for directories and adds childs to selected node
+    // Set tree state from last selected node.
+    // Explore child's node and add it to tree
     public String refresh() {
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) this
-                  .getLastSelectedPathComponent();
-        String path = this.getSelectionPath().toString();
-        path = makePath(path);
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)
+                  getLastSelectedPathComponent();
+        String path = action.treePathToString(getSelectionPath());
         File directory = new File(path);
         File files [] = directory.listFiles();
 
@@ -71,23 +71,6 @@ public class Tree extends JTree {
             }
         }
         return null;
-    }
-
-    // makes path from treePath
-    private String makePath(String path) {
-        String newPath = "";
-        path = path.replaceAll("\\]","");
-        path = path.replaceAll("\\[","");
-        String tokens [] = path.split("\\, ");
-
-        if (tokens[0].equals("root")) {
-            tokens[0] = "";
-        }
-
-        for (String token : tokens) {
-            newPath = newPath + token + "/";
-        }
-        return newPath;
     }
 }
 // called when selected a tree node

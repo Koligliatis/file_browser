@@ -14,13 +14,28 @@ public class ActionCenter {
         this.toolbar = toolbar;
         this.frame = frame;
     }
-
+    // Set search field text base on current path
     public void refreshSearchField() {
         toolbar.setSearchField(panel.currentPath);
     }
-
+    // Return current path in string
     public String getCurrentPath() {
         return panel.currentPath;
+    }
+    // Convert TreePath to string
+    public String treePathToString(TreePath treepath) {
+        String newPath = "";
+        String path = treepath.toString();
+        path = path.replaceAll("\\]","");
+        path = path.replaceAll("\\[","");
+        String tokens [] = path.split("\\, ");
+        if (tokens[0].equals("root")) {
+            tokens[0] = "";
+        }
+        for (String token : tokens) {
+            newPath = newPath + token + "/";
+        }
+        return newPath;
     }
 
     // refresh action's center tree
