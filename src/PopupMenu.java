@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 
 public class PopupMenu extends JPopupMenu implements ActionListener {
 
@@ -13,8 +14,14 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
         add(menuItem);
     }
     public void actionPerformed(ActionEvent e) {
-        String str = e.getActionCommand();
-        System.out.println(str);
+        String command = e.getActionCommand();
+
+        if (command.equals("Create New Folder")) {
+            File dir = new File("Untitled Folder");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+        }
     }
 }
 
