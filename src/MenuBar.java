@@ -38,7 +38,7 @@ public class MenuBar extends JMenuBar implements ActionListener{
         createNewFolder = new JMenuItem(" Create New Folder",icon);
 
         icon = new ImageIcon("icons/menu_bar/Deep_File_add.png");
-        createNewFile = new JMenuItem(" Create New File",icon);
+        createNewFile = new JMenuItem(" Create New Document",icon);
 
         icon = new ImageIcon("icons/menu_bar/Deep_Prohibit.png");
         exit = new JMenuItem(" Exit",icon);
