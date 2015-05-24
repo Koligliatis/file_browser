@@ -3,10 +3,10 @@ import java.util.*;
 import java.io.*;
 
 public class ActionCenter {
-    private Tree tree;
-    private Panel panel;
-    private ToolBar toolbar;
-    private MainFrame frame;
+    public Tree tree;
+    public Panel panel;
+    public ToolBar toolbar;
+    public MainFrame frame;
 
     public ActionCenter(Tree tree, Panel panel, ToolBar toolbar, MainFrame frame) {
         this.tree = tree;

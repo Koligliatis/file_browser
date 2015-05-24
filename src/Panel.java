@@ -75,7 +75,7 @@ public class Panel extends JPanel {
     }
 
     public void showPopupMenu() {
-        popup = new PopupMenu();
+        popup = new PopupMenu(action);
         popup.setMenuItem("Create New Folder");
         MouseListener popupListener = new PopupListener(popup);
         addMouseListener(popupListener);

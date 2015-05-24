@@ -7,6 +7,11 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 
     private static final long serialVersionUID = 42L;
     private JMenuItem menuItem;
+    private ActionCenter action;
+
+    public PopupMenu(ActionCenter action) {
+        this.action = action;
+    }
 
     public void setMenuItem(String description) {
         menuItem = new JMenuItem(description);
