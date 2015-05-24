@@ -57,8 +57,10 @@ public class Button extends JButton {
         setIcon(icon);
         //setText(file.getName());
         setText(text);
-        setVerticalTextPosition(AbstractButton.BOTTOM);
-        setHorizontalTextPosition(AbstractButton.CENTER);
+        if (layout.equals("FLOW")) {
+            setVerticalTextPosition(AbstractButton.BOTTOM);
+            setHorizontalTextPosition(AbstractButton.CENTER);
+        }
         setOpaque(false);
         setContentAreaFilled(false);
         setBorderPainted(false);
