@@ -25,7 +25,7 @@ public class MainFrame extends JFrame{
         panelView = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         root = new DefaultMutableTreeNode("root");
-        tree = new Tree(root,panel,this);
+        tree = new Tree(root,this);
         treeView = new JScrollPane(tree);
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);

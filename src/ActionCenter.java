@@ -15,12 +15,21 @@ public class ActionCenter {
         this.toolbar = toolbar;
         this.frame = frame;
     }
+    public void refreshFrameFromButton(Button button) {
+        TreePath treepath = button.getButtonTreePath();
+        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) treepath.getLastPathComponent();
+        @SuppressWarnings("unchecked")
+        Enumeration <DefaultMutableTreeNode> children = parent.children();
+        DefaultMutableTreeNode node = children.nextElement();
+        tree.setSelectionPath(new TreePath(node.getPath()));
+
+    }
     // Refresh frame frome tree state
     // Get path of selected node and refresh panel
     public void refreshFrameFromTree() {
         tree.setState();
         String path = treePathToString(tree.getSelectionPath());
-        panel.refresh(path);
+        panel.refresh(path,tree.getSelectionPath());
         refreshSearchField();
     }
     // Finds tree path from regular path
@@ -36,6 +45,10 @@ public class ActionCenter {
     // Return current path in string
     public String getCurrentPath() {
         return panel.currentPath;
+    }
+    // Return current tree path
+    public TreePath getCurrentTreePath() {
+        return tree.getSelectionPath();
     }
     // Convert TreePath to string
     public String treePathToString(TreePath treepath) {

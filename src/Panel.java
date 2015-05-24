@@ -11,6 +11,7 @@ import java.text.*;
 import java.awt.event.*;
 import java.awt.event.MouseEvent;
 import java.awt.*;
+import javax.swing.tree.*;
 
 public class Panel extends JPanel {
 
@@ -41,7 +42,7 @@ public class Panel extends JPanel {
         showPopupMenu();
     }
 
-    public void refresh(String path) {
+    public void refresh(String path,TreePath treepath) {
         currentPath = path;
         File directory = new File(path);
         files = directory.listFiles();
@@ -50,7 +51,7 @@ public class Panel extends JPanel {
         // for Flow panel
         if(panelType.equals("FLOW")) {
             for (File curr : files) {
-                add(new Button(curr,path,panelType));
+                add(new Button(action,curr,path,treepath,panelType));
             }
         // for list panel
         }else{
@@ -58,7 +59,7 @@ public class Panel extends JPanel {
             for (File curr : files) {
                 filePanel = new JPanel();
                 filePanel.setLayout(new GridLayout(1,4));
-                filePanel.add(new Button(curr,path,panelType));
+                filePanel.add(new Button(action,curr,path,treepath,panelType));
                 filePanel.add(new JLabel((String.valueOf(curr.length()))));
                 filePanel.setMaximumSize(new Dimension(1800,30));
                 if(curr.isDirectory()) {
