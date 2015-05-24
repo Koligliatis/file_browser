@@ -22,7 +22,6 @@ public class MainFrame extends JFrame{
     public void setFrame() {
 
         panel = new Panel();
-        panel.buildFlowPanel();
         panelView = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         root = new DefaultMutableTreeNode("root");
@@ -34,13 +33,14 @@ public class MainFrame extends JFrame{
 
         setJMenuBar(new MenuBar());
 
-        ToolBar toolbar = new ToolBar(tree,panel);
+        ToolBar toolbar = new ToolBar();
         add(toolbar, BorderLayout.NORTH);
 
         action = new ActionCenter(tree, panel, toolbar, this);
         panel.setActionCenter(action);
         tree.setActionCenter(action);
         toolbar.setActionCenter(action);
+        panel.buildFlowPanel();
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/Folder-plain-iconSm.png")));
         setSize(WIDTH,HEIGHT);

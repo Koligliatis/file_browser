@@ -15,8 +15,12 @@ public class ActionCenter {
         this.frame = frame;
     }
 
-    public void refreshFrame() {
-        toolbar.searchField.setText(panel.currentPath);
+    public void refreshSearchField() {
+        toolbar.setSearchField(panel.currentPath);
+    }
+
+    public String getCurrentPath() {
+        return panel.currentPath;
     }
 
     // refresh action's center tree

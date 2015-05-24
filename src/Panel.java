@@ -43,7 +43,7 @@ public class Panel extends JPanel {
 
     public void refresh(String path) {
         currentPath = path;
-        action.refreshFrame();
+        action.refreshSearchField();
         File directory = new File(path);
         files = directory.listFiles();
 
@@ -75,6 +75,7 @@ public class Panel extends JPanel {
     }
 
     public void showPopupMenu() {
+
         popup = new PopupMenu(action);
         popup.setMenuItem("Create New Folder");
         MouseListener popupListener = new PopupListener(popup);
