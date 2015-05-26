@@ -31,7 +31,7 @@ public class MainFrame extends JFrame{
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);
         splitPane.setDividerLocation(250 + splitPane.getInsets().left);
 
-        setJMenuBar(new MenuBar());
+        setJMenuBar(new MenuBar(action));
 
         ToolBar toolbar = new ToolBar();
         add(toolbar, BorderLayout.NORTH);
@@ -39,8 +39,8 @@ public class MainFrame extends JFrame{
         action = new ActionCenter(tree, panel, toolbar, this);
         panel.setActionCenter(action);
         tree.setActionCenter(action);
+        setJMenuBar(new MenuBar(action));
         toolbar.setActionCenter(action);
-        panel.buildFlowPanel();
 
         panel.buildFlowPanel();
 
