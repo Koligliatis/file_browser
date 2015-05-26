@@ -15,28 +15,23 @@ public class ActionCenter {
         this.toolbar = toolbar;
         this.frame = frame;
     }
-    public void refreshFrameFromButton(Button button) {
-        TreePath treepath = button.getButtonTreePath();
-        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) treepath.getLastPathComponent();
-        @SuppressWarnings("unchecked")
-        Enumeration <DefaultMutableTreeNode> children = parent.children();
-        DefaultMutableTreeNode node = children.nextElement();
-        tree.setSelectionPath(new TreePath(node.getPath()));
-
+    public void refreshFrame() {
+        refreshFrameFromTree();
     }
     // Refresh frame frome tree state
     // Get path of selected node and refresh panel
     public void refreshFrameFromTree() {
         tree.setState();
         String path = treePathToString(tree.getSelectionPath());
-        panel.refresh(path,tree.getSelectionPath());
+        panel.refresh(path);
         refreshSearchField();
     }
     // Finds tree path from regular path
     // and fires tree action event with this tree path
-    public void setSelectedPath(String path) {
+    public void setSelectionPath(String path) {
         TreePath treepath = tree.findTreePath(path);
         tree.setSelectionPath(treepath);
+        refreshFrameFromTree();
     }
     // Set search field text base on current path
     public void refreshSearchField() {

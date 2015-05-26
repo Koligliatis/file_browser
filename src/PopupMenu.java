@@ -90,5 +90,6 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
                 doc.createNewFile();
             }catch (IOException ex) {}
         }
+        action.refreshFrame();
     }
 }

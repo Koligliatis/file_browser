@@ -37,41 +37,80 @@ public class Tree extends JTree {
         addTreeSelectionListener(new SelectionListener(action));
     }
     // Set tree state from last selected node.
-    // Explore child's node and add it to treepublic void setTreeState() {
+    // Explore child's node and add it to tree
     public void setState() {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)
                   getLastSelectedPathComponent();
         String path = action.treePathToString(getSelectionPath());
+        addFiles(path,selectedNode);
+    }
+    // Add nodes to tree from specific path
+    public void addFiles(String path,DefaultMutableTreeNode node) {
         File directory = new File(path);
         File files [] = directory.listFiles();
+        DefaultMutableTreeNode child;
+
+        //node.removeAllChildren();
 
         if (files != null) {
             for (File curr : files) {
                 if (curr.isDirectory()) {
-                    selectedNode.add(new DefaultMutableTreeNode(curr.getName()));
+                    child = new DefaultMutableTreeNode(curr.getName());
+                    if (!hasChild(node,child)) {
+                        node.add(child);
+                    }
                 }
             }
         }
     }
-    // find tree path by string
-    public TreePath findTreePath(String s) {
-
-        //Enumeration children = root.children();
-        //while (true) {
-        //    while (children.hasMoreElements()) {
-        //        if
-        //    }
-        //}
-
+    // Takes a parent node and a child node and
+    // returns true if child node is child of parent node
+    // else returns false
+    public boolean hasChild(DefaultMutableTreeNode parent,DefaultMutableTreeNode child) {
+        DefaultMutableTreeNode node;
         @SuppressWarnings("unchecked")
-        Enumeration<DefaultMutableTreeNode> e = root.depthFirstEnumeration();
-        while (e.hasMoreElements()) {
-            DefaultMutableTreeNode node = e.nextElement();
-            if (node.toString().equalsIgnoreCase(s)) {
-                    return new TreePath(node.getPath());
+        Enumeration<DefaultMutableTreeNode> children = parent.children();
+        while (children.hasMoreElements()) {
+            node = children.nextElement();
+            if (node.toString().equals(child.toString())) {
+                return true;
             }
         }
-        return null;
+        return false;
+    }
+    // Searchs tree's node and
+    // finds tree path by regular string path
+    public TreePath findTreePath(String s) {
+        String result [] = s.replaceFirst("/","").split("/");
+        int count = 0;
+        String path = "/";
+        DefaultMutableTreeNode node;
+        DefaultMutableTreeNode lastCorrectNode = root;
+        // add to tree root childs
+        addFiles(path,root);
+        @SuppressWarnings("unchecked")
+        Enumeration<DefaultMutableTreeNode> children = root.children();
+        while (true) {
+            while (children.hasMoreElements()) {
+                node = children.nextElement();
+                if (node.toString().equalsIgnoreCase(result[count])) {
+                    // add to tree node childs
+                    path = path + result[count] + "/";
+                    addFiles(path,node);
+                    children = node.children();
+                    lastCorrectNode = node;
+                    break;
+                }
+                if (!children.hasMoreElements()){
+                    return null;
+                }
+            }
+            // path has find
+            if (count == result.length - 1) {
+                return new TreePath(lastCorrectNode.getPath());
+            }
+            count++;
+        }
     }
 }
 // called when selected a tree node

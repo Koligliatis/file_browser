@@ -144,18 +144,17 @@ public class ToolBar extends JToolBar implements ActionListener {
             System.out.println("Front");
         //REFRESH BUTTON
         } else if (pressedButton == refresh) {
-            int [] sel = action.tree.getSelectionRows();
-            action.tree.setSelectionRow(0);
-            action.tree.setSelectionRows(sel);
+            action.refreshFrame();
         //HOME BUTTON
         } else if (pressedButton == home) {
-            action.setSelectedPath("home");
+            action.setSelectionPath("/home/");
         //COMPUTER BUTTON
         } else if (pressedButton == computer) {
             System.out.println("Computer");
         //SEARCH BUTTON
         } else if (pressedButton == search) {
             String searchPath = searchField.getText();
+            action.setSelectionPath(searchPath);
         //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
             action.panel.buildFlowPanel();

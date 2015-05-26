@@ -10,15 +10,13 @@ public class Button extends JButton {
     private static final long serialVersionUID = 42L;
     private File file;
     private String path;
-    private TreePath treepath;
     private ImageIcon icon;
     private ActionCenter action;
 
-    public Button (ActionCenter action, File file, String path, TreePath treepath, String layout) {
+    public Button (ActionCenter action, File file, String path, String layout) {
         this.action = action;
         this.file = file;
         this.path = path;
-        this.treepath = treepath;
         String str = "";
         if (layout.equals("FLOW")) {
             str = new String("");
@@ -80,9 +78,6 @@ public class Button extends JButton {
     public String getButtonPath() {
         return path;
     }
-    public TreePath getButtonTreePath() {
-        return treepath;
-    }
 }
 // If button selected:
 // if button's file is directory open and refresh frame
@@ -96,7 +91,7 @@ class ButtonActionListener implements ActionListener {
     }
     public void actionPerformed(ActionEvent e) {
         if (button.getButtonFile().isDirectory()) {
-            action.refreshFrameFromButton(button);
+            action.setSelectionPath(button.getButtonPath());
         }
     }
 }
