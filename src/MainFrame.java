@@ -24,6 +24,7 @@ public class MainFrame extends JFrame{
         panel = new Panel();
         panelView = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panelView.getVerticalScrollBar().setUnitIncrement(20);
         root = new DefaultMutableTreeNode("root");
         tree = new Tree(root,this);
         treeView = new JScrollPane(tree);

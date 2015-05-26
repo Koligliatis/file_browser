@@ -43,6 +43,7 @@ public class Tree extends JTree {
                   getLastSelectedPathComponent();
         String path = action.treePathToString(getSelectionPath());
         addFiles(path,selectedNode);
+        scrollPathToVisible(getSelectionPath());
     }
     // Add nodes to tree from specific path
     public void addFiles(String path,DefaultMutableTreeNode node) {
