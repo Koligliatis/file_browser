@@ -74,6 +74,10 @@ public class Panel extends JPanel {
         updateUI();
     }
 
+    public String getCurrentPath() {
+        return currentPath;
+    }
+
     public void showPopupMenu() {
         popup = new PopupMenu(action);
         popup.setMenuItem("Create New Folder");

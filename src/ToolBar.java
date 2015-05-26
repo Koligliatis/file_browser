@@ -138,7 +138,7 @@ public class ToolBar extends JToolBar implements ActionListener {
         JButton pressedButton = (JButton) e.getSource();
         //BACK BUTTON
         if (pressedButton == back) {
-            System.out.println("Back");
+            action.backToPath();
         //FRONT BUTTON
         } else if (pressedButton == front) {
             System.out.println("Front");
@@ -153,16 +153,13 @@ public class ToolBar extends JToolBar implements ActionListener {
             System.out.println("Computer");
         //SEARCH BUTTON
         } else if (pressedButton == search) {
-            String searchPath = searchField.getText();
-            action.setSelectionPath(searchPath);
+            action.setSelectionPath(searchField.getText());
         //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
-            action.panel.buildFlowPanel();
-            action.refreshFrameFromTree();
+            action.setPanelLayout("FLOW");
         //LISTVIEW BUTTON
         } else if (pressedButton == listview) {
-            action.panel.buildListPanel();
-            action.refreshFrameFromTree();
+            action.setPanelLayout("LIST");
         }
     }
 }

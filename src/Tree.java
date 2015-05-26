@@ -82,6 +82,9 @@ public class Tree extends JTree {
     // Searchs tree's node and
     // finds tree path by regular string path
     public TreePath findTreePath(String s) {
+        if (s.equals("/")) {
+            return new TreePath(root.getPath());
+        }
         String result [] = s.replaceFirst("/","").split("/");
         int count = 0;
         String path = "/";
@@ -121,6 +124,6 @@ class SelectionListener implements TreeSelectionListener {
         this.action = action;
     }
     public void valueChanged(TreeSelectionEvent se) {
-       action.refreshFrameFromTree();
+       action.refreshFrame();
     }
 }

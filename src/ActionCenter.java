@@ -8,31 +8,43 @@ public class ActionCenter {
     public Panel panel;
     public ToolBar toolbar;
     public MainFrame frame;
+    private String currentPath;
+    private PathHistory history;
+    private boolean writeHistory;
 
     public ActionCenter(Tree tree, Panel panel, ToolBar toolbar, MainFrame frame) {
         this.tree = tree;
         this.panel = panel;
         this.toolbar = toolbar;
         this.frame = frame;
-    }
-    public void refreshFrame() {
-        refreshFrameFromTree();
+        history = new PathHistory();
+        currentPath = "/";
+        writeHistory = true;
     }
     // Refresh frame frome tree state
     // Get path of selected node and refresh panel
-    public void refreshFrameFromTree() {
+    public void refreshFrame() {
         tree.setState();
         String path = treePathToString(tree.getSelectionPath());
         panel.refresh(path);
         refreshSearchField();
+        currentPath = panel.getCurrentPath();
+        if (writeHistory) {
+            history.addTail(currentPath + "\n");
+        }
+        writeHistory = true;
     }
     // Finds tree path from regular path
     // and fires tree action event with this tree path
     public void setSelectionPath(String path) {
         TreePath treepath = tree.findTreePath(path);
         tree.setSelectionPath(treepath);
-        refreshFrameFromTree();
     }
+    public void backToPath() {
+        writeHistory = false;
+        setSelectionPath(history.getLine());
+    }
+    public void frontToPath() {}
     // Set search field text base on current path
     public void refreshSearchField() {
         toolbar.setSearchField(panel.currentPath);
@@ -61,12 +73,18 @@ public class ActionCenter {
         return newPath;
     }
     // set layout of action's center panel
+    // and refresh it
     public void setPanelLayout(String layout) {
         if (layout.equals("FLOW")) {
-            this.panel.buildFlowPanel();
+            panel.buildFlowPanel();
         } else if (layout.equals("LIST")) {
-            this.panel.buildListPanel();
+            panel.buildListPanel();
         }
+        String path = treePathToString(tree.getSelectionPath());
+        panel.refresh(path);
+    }
+    public void close() {
+        history.deleteFile();
     }
 }
 
