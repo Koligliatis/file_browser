@@ -141,7 +141,7 @@ public class ToolBar extends JToolBar implements ActionListener {
             action.backToPath();
         //FRONT BUTTON
         } else if (pressedButton == front) {
-            System.out.println("Front");
+            action.frontToPath();
         //REFRESH BUTTON
         } else if (pressedButton == refresh) {
             action.refreshFrame();

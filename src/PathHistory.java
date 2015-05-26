@@ -10,6 +10,8 @@ public class PathHistory {
     private long seekPosition;
     private long truncatePosition;
     private boolean truncate;
+    private boolean front;
+    private boolean back;
 
     public PathHistory() {
         file = new File("history.txt");
@@ -17,10 +19,62 @@ public class PathHistory {
             file.delete();
         }
         truncate = false;
+        front = false;
+        back = false;
+    }
+    public String getFrontLine() {
+        truncate = true;
+        front = true;
+        if (back){
+            seekPosition = truncatePosition;
+            seekPosition = seekPosition + 1;
+            back = false;
+        }
+        RandomAccessFile fileHandler = null;
+        try {
+            fileHandler = new RandomAccessFile( file, "r" );
+            long fileLength = fileHandler.length() - 1;
+            long filePointer;
+            StringBuilder sb = new StringBuilder();
+
+            for(filePointer = seekPosition; filePointer != fileHandler.length(); filePointer++){
+                fileHandler.seek( filePointer );
+                int readByte = fileHandler.readByte();
+                // new line
+                if( readByte == 0xA ) {
+                    if( filePointer == seekPosition ) {
+                        continue;
+                    }
+                    break;
+                // carriage return
+                } else if( readByte == 0xD ) {
+                    if( filePointer == seekPosition - 1 ) {
+                        continue;
+                    }
+                    break;
+                }
+                sb.append( ( char ) readByte );
+            }
+            truncatePosition = seekPosition;
+            seekPosition = filePointer;
+            String lastLine = sb.toString();
+            return lastLine;
+        } catch( java.io.FileNotFoundException e ) {
+            e.printStackTrace();
+            return null;
+        } catch( java.io.IOException e ) {
+            e.printStackTrace();
+            return null;
+        }
     }
     // read line from file and return it to string
-    public String getLine() {
+    public String getBackLine() {
         truncate = true;
+        back = true;
+        if (front) {
+            seekPosition = truncatePosition - 2;
+            front = false;
+        }
         RandomAccessFile fileHandler = null;
         try {
             fileHandler = new RandomAccessFile( file, "r" );
@@ -71,7 +125,11 @@ public class PathHistory {
             long fileLength = fileHandler.length();
             if (truncate) {
                 if (seekPosition != -1) {
-                    fileHandler.getChannel().truncate(truncatePosition + 1);
+                    if (front) {
+                        fileHandler.getChannel().truncate(truncatePosition - 1);
+                    }else {
+                        fileHandler.getChannel().truncate(truncatePosition + 1);
+                    }
                     fileLength = fileHandler.length();
                     truncate = false;
                 }

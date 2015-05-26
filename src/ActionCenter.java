@@ -42,9 +42,12 @@ public class ActionCenter {
     }
     public void backToPath() {
         writeHistory = false;
-        setSelectionPath(history.getLine());
+        setSelectionPath(history.getBackLine());
     }
-    public void frontToPath() {}
+    public void frontToPath() {
+        writeHistory = false;
+        setSelectionPath(history.getFrontLine());
+    }
     // Set search field text base on current path
     public void refreshSearchField() {
         toolbar.setSearchField(panel.currentPath);
