@@ -44,6 +44,7 @@ public class MenuActionListener implements ActionListener {
             //create the directory in current path
             File dir = new File(action.panel.currentPath + newFolder);
             dir.mkdir();
+            action.renameFile("ND",dir,dir.getName());
         }
         //second menuItem of popupMenu (New Document)
         else if (command.equals("Create New Document")) {

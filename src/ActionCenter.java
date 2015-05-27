@@ -2,6 +2,7 @@ import javax.swing.tree.*;
 import java.util.*;
 import java.io.*;
 import javax.swing.*;
+import java.io.File;
 
 // Contains the basic interaction of components
 public class ActionCenter {
@@ -89,6 +90,8 @@ public class ActionCenter {
         String path = treePathToString(tree.getSelectionPath());
         panel.refresh(path);
     }
+    // Find program with extension of file in dictionary
+    // and run that file with this program
     public void runProgram(String name,String extension) {
         try {
             String path;
@@ -106,6 +109,20 @@ public class ActionCenter {
         } catch (IOException e) {
         } catch(InterruptedException e) {
            Thread.currentThread().interrupt();
+        }
+    }
+    public void renameFile(String message,File file,String name) {
+        if (message.equals("ND")) {
+            System.out.println("?");
+            String s = (String)JOptionPane.showInputDialog(
+                    frame,"Give a name for the new folder",
+                    "New Folder",JOptionPane.PLAIN_MESSAGE,null,
+                    null,name);
+            if ((s != null) && (s.length() > 0)) {
+                File newFile = new File(currentPath + s);
+                file.renameTo(newFile);
+            }
+            refreshFrame();
         }
     }
     public void close() {
