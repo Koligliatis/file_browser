@@ -22,7 +22,7 @@ public class Button extends JButton {
         String str = "";
         if (layout.equals("FLOW")) {
             str = new String("");
-            setPreferredSize(new Dimension(100, 100));
+            setPreferredSize(new Dimension(150, 120));
         }else {
             str = new String("S");
             setPreferredSize(new Dimension(50,50 ));
@@ -52,14 +52,15 @@ public class Button extends JButton {
         }
 
         String text = "";
-        for (char ch: file.getName().toCharArray()) {
-            if (text.length() % 10 == 0) {
-                text = text + "\n" + ch;
-            }
-            else {
-                text = text + ch;
-            }
-        }
+        //for (char ch: file.getName().toCharArray()) {
+        //    if (text.length() % 10 == 0) {
+        //        text = text + "\n" + ch;
+        //    }
+        //    else {
+        //        text = text + ch;
+        //    }
+        //}
+	text = "<html>" + file.getName() + "<html/>";
 
         setIcon(icon);
         //setText(file.getName());
