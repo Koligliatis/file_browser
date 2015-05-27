@@ -32,8 +32,6 @@ public class MainFrame extends JFrame{
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,treeView,panelView);
         splitPane.setDividerLocation(250 + splitPane.getInsets().left);
 
-        setJMenuBar(new MenuBar(action));
-
         ToolBar toolbar = new ToolBar();
         add(toolbar, BorderLayout.NORTH);
 

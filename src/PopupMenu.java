@@ -8,7 +8,6 @@ public class PopupMenu extends JPopupMenu {
     private static final long serialVersionUID = 42L;
     private JMenuItem menuItem;
     private ActionCenter action;
-    private String currPath;
 
     public PopupMenu(ActionCenter action) {
         this.action = action;

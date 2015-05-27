@@ -12,6 +12,7 @@ public class Button extends JButton {
     private String path;
     private ImageIcon icon;
     private ActionCenter action;
+    private ButtonPopupMenu buttonPopup;
 
     public Button (ActionCenter action, File file, String path, String layout) {
         this.action = action;
@@ -69,7 +70,7 @@ public class Button extends JButton {
         setOpaque(false);
         setContentAreaFilled(false);
         setBorderPainted(false);
-        addActionListener(new ButtonActionListener(action, this));
+        showPopupMenu();
     }
 
     public File getButtonFile() {
@@ -78,20 +79,42 @@ public class Button extends JButton {
     public String getButtonPath() {
         return path;
     }
+
+    public void showPopupMenu() {
+        buttonPopup = new ButtonPopupMenu(action);
+        buttonPopup.setMenuItem("Rename");
+        buttonPopup.setMenuItem("Delete");
+        MouseListener ButtonPopupListener = new ButtonPopupListener(buttonPopup, action, this);
+        addMouseListener(ButtonPopupListener);
+    }
 }
-// If button selected:
-// if button's file is directory open and refresh frame
-// else run the with a program
-class ButtonActionListener implements ActionListener {
+
+class ButtonPopupListener extends MouseAdapter {
+    JPopupMenu buttonPopup;
     private ActionCenter action;
     private Button button;
-    public ButtonActionListener(ActionCenter action, Button button) {
+    ButtonPopupListener(JPopupMenu popupMenu, ActionCenter action, Button button) {
+        buttonPopup = popupMenu;
         this.action = action;
         this.button = button;
     }
-    public void actionPerformed(ActionEvent e) {
-        if (button.getButtonFile().isDirectory()) {
-            action.setSelectionPath(button.getButtonPath());
+    public void mousePressed(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            if (button.getButtonFile().isDirectory()) {
+                action.setSelectionPath(button.getButtonPath());
+            }
+        }
+        else if (e.getButton() == MouseEvent.BUTTON3) {
+            maybeShowPopup(e);
+        }
+    }
+    public void mouseReleased(MouseEvent e) {
+         maybeShowPopup(e);
+    }
+    private void maybeShowPopup(MouseEvent e) {
+        if (e.isPopupTrigger()) {
+             buttonPopup.show(e.getComponent(),
+             e.getX(), e.getY());
         }
     }
 }
