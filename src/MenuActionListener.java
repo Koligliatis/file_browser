@@ -73,6 +73,7 @@ public class MenuActionListener implements ActionListener {
             try {
                 doc.createNewFile();
             }catch (IOException ex) {}
+            action.renameFile("NF",doc,doc.getName());
         } else if (command.equals(" Exit")) {
             System.exit(0);
         }

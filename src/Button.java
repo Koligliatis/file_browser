@@ -86,7 +86,7 @@ public class Button extends JButton {
     }
 
     public void showPopupMenu() {
-        buttonPopup = new ButtonPopupMenu(action);
+        buttonPopup = new ButtonPopupMenu(action,this);
         buttonPopup.setMenuItem("Rename");
         buttonPopup.setMenuItem("Delete");
         MouseListener ButtonPopupListener = new ButtonPopupListener(buttonPopup, action, this);
@@ -115,6 +115,7 @@ class ButtonPopupListener extends MouseAdapter {
         }
         else if (e.getButton() == MouseEvent.BUTTON3) {
             maybeShowPopup(e);
+            button.setBorderPainted(true);
         }
     }
     public void mouseReleased(MouseEvent e) {

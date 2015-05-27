@@ -85,7 +85,6 @@ public class Tree extends JTree {
         if (s.equals("/")) {
             return new TreePath(root.getPath());
         }
-        System.out.println(s);
         String result [] = s.replaceFirst("/","").split("/");
         int count = 0;
         String path = "/";

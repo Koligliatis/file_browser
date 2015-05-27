@@ -112,18 +112,48 @@ public class ActionCenter {
         }
     }
     public void renameFile(String message,File file,String name) {
+        String dialogMessage;
+        String textMessage;
+        boolean returnValue = false;
         if (message.equals("ND")) {
-            System.out.println("?");
-            String s = (String)JOptionPane.showInputDialog(
-                    frame,"Give a name for the new folder",
-                    "New Folder",JOptionPane.PLAIN_MESSAGE,null,
-                    null,name);
-            if ((s != null) && (s.length() > 0)) {
-                File newFile = new File(currentPath + s);
-                file.renameTo(newFile);
-            }
-            refreshFrame();
+            dialogMessage = new String("Give a name for the new folder");
+            textMessage = new String("New Folder");
+        }else if (message.equals("NF")) {
+            dialogMessage = new String("Give a name for the new file");
+            textMessage = new String("New File");
+        }else if (message.equals("RF")) {
+            dialogMessage = new String("New name");
+            textMessage = new String ("Rename File");
+        }else {
+            dialogMessage = new String("");
+            textMessage = new String("");
         }
+        String s = (String)JOptionPane.showInputDialog(
+                frame,dialogMessage,
+                textMessage,JOptionPane.PLAIN_MESSAGE,null,
+                null,name);
+        if ((s != null) && (s.length() > 0)) {
+            File newFile = new File(currentPath + s);
+            file.renameTo(newFile);
+        }else if (message.equals("ND")){
+            file.delete();
+        }else if (message.equals("NF")) {
+            file.delete();
+        }
+        refreshFrame();
+    }
+
+    public void deleteFile(File file) {
+        Object [] options = {"Delete","Cansel"};
+        int n = JOptionPane.showOptionDialog(frame,"Are you sure you want to " +
+                "permanently delete \""+file.getName()+"\"?","Attenstion",
+                JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,
+                null,options,options[0]);
+        if (n == 0) {
+            file.delete();
+        }
+        refreshFrame();
+
     }
     public void close() {
         history.deleteFile();
