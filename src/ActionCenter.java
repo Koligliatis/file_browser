@@ -1,6 +1,7 @@
 import javax.swing.tree.*;
 import java.util.*;
 import java.io.*;
+import javax.swing.*;
 
 // Contains the basic interaction of components
 public class ActionCenter {
@@ -10,6 +11,7 @@ public class ActionCenter {
     public MainFrame frame;
     private String currentPath;
     private PathHistory history;
+    private Configuration config;
     private boolean writeHistory;
 
     public ActionCenter(Tree tree, Panel panel, ToolBar toolbar, MainFrame frame) {
@@ -18,6 +20,7 @@ public class ActionCenter {
         this.toolbar = toolbar;
         this.frame = frame;
         history = new PathHistory();
+        config = new Configuration();
         currentPath = "/";
         writeHistory = true;
     }
@@ -85,6 +88,25 @@ public class ActionCenter {
         }
         String path = treePathToString(tree.getSelectionPath());
         panel.refresh(path);
+    }
+    public void runProgram(String name,String extension) {
+        try {
+            String path;
+            Process p;
+            String program = config.getProgram(extension);
+            if (program == null) {
+                JOptionPane.showMessageDialog(frame,"Not found program for this type of file",
+                                    "Program not found",JOptionPane.PLAIN_MESSAGE);
+            } else {
+                path = program + " " + name;
+                p = Runtime.getRuntime().exec(path);
+                p.waitFor();
+                p.destroy();
+            }
+        } catch (IOException e) {
+        } catch(InterruptedException e) {
+           Thread.currentThread().interrupt();
+        }
     }
     public void close() {
         history.deleteFile();

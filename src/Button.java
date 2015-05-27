@@ -12,6 +12,7 @@ public class Button extends JButton {
     private String path;
     private ImageIcon icon;
     private ActionCenter action;
+    private String extension;
 
     public Button (ActionCenter action, File file, String path, String layout) {
         this.action = action;
@@ -30,7 +31,7 @@ public class Button extends JButton {
             icon = new ImageIcon( System.getProperty("user.dir")+"/icons/Folder-plain-icon"+str+".png" );
         }
         else {
-            String extension = "";
+            extension = "";
             String iconPath = "icons/";
             int i = file.getName().lastIndexOf('.');
             if (i > 0) {
@@ -72,6 +73,10 @@ public class Button extends JButton {
         addActionListener(new ButtonActionListener(action, this));
     }
 
+    public String getExtension() {
+        return extension;
+    }
+
     public File getButtonFile() {
         return file;
     }
@@ -92,6 +97,10 @@ class ButtonActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (button.getButtonFile().isDirectory()) {
             action.setSelectionPath(button.getButtonPath());
+        }else {
+            String name = button.getButtonPath();
+            String extension = button.getExtension();
+            action.runProgram(name,extension);
         }
     }
 }
