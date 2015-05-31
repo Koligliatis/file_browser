@@ -88,7 +88,7 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
         //computer.setRequestFocusEnabled(false);
         //computer.setOpaque(false);
 
-        search.setToolTipText("Go to Computer");
+        search.setToolTipText("Search path");
         search.setBorderPainted(false);
         search.setRequestFocusEnabled(false);
         search.setOpaque(false);
@@ -162,6 +162,7 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
         //    System.out.println("Computer");
         //SEARCH BUTTON
         } else if (pressedButton == search) {
+            action.setSelectionPath(searchField.getText());
         //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
             action.setPanelLayout("FLOW");
