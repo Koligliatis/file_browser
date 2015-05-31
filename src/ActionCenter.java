@@ -42,7 +42,11 @@ public class ActionCenter {
     // and fires tree action event with this tree path
     public void setSelectionPath(String path) {
         TreePath treepath = tree.findTreePath(path);
-        tree.setSelectionPath(treepath);
+        if (treepath != null) {
+            tree.setSelectionPath(treepath);
+        }else {
+            toolbar.errorPath();
+        }
     }
     public void backToPath() {
         writeHistory = false;

@@ -4,8 +4,9 @@ import java.awt.event.*;
 import java.awt.image.*;
 import java.awt.event.ActionEvent;
 import java.awt.*;
+import java.applet.*;
 
-public class ToolBar extends JToolBar implements ActionListener {
+public class ToolBar extends JToolBar implements KeyListener,ActionListener {
 
     private static final long serialVersionUID = 42L;
 
@@ -34,8 +35,8 @@ public class ToolBar extends JToolBar implements ActionListener {
         refresh = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/Deep_Home.png");
         home = new JButton(icon);
-        icon = new ImageIcon("icons/toolbar/Deep_Computer.png");
-        computer = new JButton(icon);
+        //icon = new ImageIcon("icons/toolbar/Deep_Computer.png");
+        //computer = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/icon_view.png");
         iconview = new JButton(icon);
         icon = new ImageIcon("icons/toolbar/list_view.png");
@@ -46,6 +47,7 @@ public class ToolBar extends JToolBar implements ActionListener {
         searchPanel = new JPanel();
         searchPanel.setMaximumSize(new Dimension(400,100));
         searchField = new JTextField(90);
+        searchField.addKeyListener(this);
         searchPanel.add(Box.createHorizontalGlue());
         searchPanel.add(searchField);
         searchPanel.add(Box.createHorizontalGlue());
@@ -81,10 +83,10 @@ public class ToolBar extends JToolBar implements ActionListener {
         home.setRequestFocusEnabled(false);
         home.setOpaque(false);
 
-        computer.setToolTipText("Go to Computer");
-        computer.setBorderPainted(false);
-        computer.setRequestFocusEnabled(false);
-        computer.setOpaque(false);
+        //computer.setToolTipText("Go to Computer");
+        //computer.setBorderPainted(false);
+        //computer.setRequestFocusEnabled(false);
+        //computer.setOpaque(false);
 
         search.setToolTipText("Go to Computer");
         search.setBorderPainted(false);
@@ -94,7 +96,7 @@ public class ToolBar extends JToolBar implements ActionListener {
         back.addActionListener(this);
         front.addActionListener(this);
         refresh.addActionListener(this);
-        computer.addActionListener(this);
+        //computer.addActionListener(this);
         home.addActionListener(this);
         iconview.addActionListener(this);
         listview.addActionListener(this);
@@ -108,8 +110,8 @@ public class ToolBar extends JToolBar implements ActionListener {
         add(refresh);
         addSeparator();
         add(home);
-        addSeparator();
-        add(computer);
+        //addSeparator();
+        //add(computer);
         add(new JSeparator(SwingConstants.VERTICAL));
         addSeparator();
         add(searchPanel);
@@ -128,6 +130,12 @@ public class ToolBar extends JToolBar implements ActionListener {
 
     public void setSearchField(String path) {
         searchField.setText(path);
+        searchField.setForeground(Color.BLACK);
+    }
+
+    public void errorPath() {
+        setSearchField("Path does not exists");
+        searchField.setForeground(Color.RED);
     }
 
     public void setActionCenter(ActionCenter action) {
@@ -148,9 +156,10 @@ public class ToolBar extends JToolBar implements ActionListener {
         //HOME BUTTON
         } else if (pressedButton == home) {
             action.setSelectionPath("/home/");
+        //TODO
         //COMPUTER BUTTON
-        } else if (pressedButton == computer) {
-            System.out.println("Computer");
+        //} else if (pressedButton == computer) {
+        //    System.out.println("Computer");
         //SEARCH BUTTON
         } else if (pressedButton == search) {
             action.setSelectionPath(searchField.getText());
@@ -161,5 +170,18 @@ public class ToolBar extends JToolBar implements ActionListener {
         } else if (pressedButton == listview) {
             action.setPanelLayout("LIST");
         }
+    }
+
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            System.out.println("Enter pressed");
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
     }
 }
