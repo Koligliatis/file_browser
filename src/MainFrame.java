@@ -35,11 +35,14 @@ public class MainFrame extends JFrame{
         ToolBar toolbar = new ToolBar();
         add(toolbar, BorderLayout.NORTH);
 
-        action = new ActionCenter(tree, panel, toolbar, this);
+        SearchBar searchBar = new SearchBar();
+
+        action = new ActionCenter(tree, panel, toolbar, searchBar, this);
         panel.setActionCenter(action);
         tree.setActionCenter(action);
         setJMenuBar(new MenuBar(action));
         toolbar.setActionCenter(action);
+        searchBar.setActionCenter(action);
 
         panel.buildFlowPanel();
 

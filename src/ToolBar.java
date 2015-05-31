@@ -24,7 +24,7 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
     private ActionCenter action;
 
     public ToolBar() {
-        setFloatable( false);
+        setFloatable( false );
         ImageIcon icon;
 
         icon = new ImageIcon("icons/toolbar/Back.png");
@@ -123,7 +123,6 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
         addSeparator();
         add(listview);
     }
-
     public JTextField getSearchField() {
         return searchField;
     }
@@ -141,7 +140,7 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
     public void setActionCenter(ActionCenter action) {
         this.action = action;
     }
-    // Implement ActionListener interface
+
     public void actionPerformed(ActionEvent e) {
         JButton pressedButton = (JButton) e.getSource();
         //BACK BUTTON
@@ -162,6 +161,7 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
         //    System.out.println("Computer");
         //SEARCH BUTTON
         } else if (pressedButton == search) {
+            action.changeToolbar();
         //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
             action.setPanelLayout("FLOW");
@@ -170,7 +170,7 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
             action.setPanelLayout("LIST");
         }
     }
-    // Implement KeyListener interface
+
     public void keyTyped(KeyEvent e) {
     }
 
@@ -178,8 +178,6 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ENTER) {
             action.setSelectionPath(searchField.getText());
-        }else {
-            searchField.setForeground(Color.BLACK);
         }
     }
 

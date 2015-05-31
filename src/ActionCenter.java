@@ -3,22 +3,25 @@ import java.util.*;
 import java.io.*;
 import javax.swing.*;
 import java.io.File;
+import java.awt.BorderLayout;
 
 // Contains the basic interaction of components
 public class ActionCenter {
     public Tree tree;
     public Panel panel;
     public ToolBar toolbar;
+    private SearchBar searchBar;
     public MainFrame frame;
     private String currentPath;
     private PathHistory history;
     private Configuration config;
     private boolean writeHistory;
 
-    public ActionCenter(Tree tree, Panel panel, ToolBar toolbar, MainFrame frame) {
+    public ActionCenter(Tree tree, Panel panel, ToolBar toolbar, SearchBar searchBar, MainFrame frame) {
         this.tree = tree;
         this.panel = panel;
         this.toolbar = toolbar;
+        this.searchBar = searchBar;
         this.frame = frame;
         history = new PathHistory();
         config = new Configuration();
@@ -82,6 +85,20 @@ public class ActionCenter {
             newPath = newPath + token + "/";
         }
         return newPath;
+    }
+    public void repaintFrame() {
+        frame.revalidate();
+        frame.repaint();
+    }
+    public void changeToolbar() {
+        if (searchBar.getParent() == null) {
+            frame.remove(toolbar);
+            frame.add(searchBar,BorderLayout.NORTH);
+        }else {
+            frame.remove(searchBar);
+            frame.add(toolbar,BorderLayout.NORTH);
+        }
+        repaintFrame();
     }
     // set layout of action's center panel
     // and refresh it
