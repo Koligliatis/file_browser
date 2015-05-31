@@ -141,7 +141,7 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
     public void setActionCenter(ActionCenter action) {
         this.action = action;
     }
-
+    // Implement ActionListener interface
     public void actionPerformed(ActionEvent e) {
         JButton pressedButton = (JButton) e.getSource();
         //BACK BUTTON
@@ -162,7 +162,6 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
         //    System.out.println("Computer");
         //SEARCH BUTTON
         } else if (pressedButton == search) {
-            action.setSelectionPath(searchField.getText());
         //ICONVIEW BUTTON
         } else if (pressedButton == iconview) {
             action.setPanelLayout("FLOW");
@@ -171,14 +170,16 @@ public class ToolBar extends JToolBar implements KeyListener,ActionListener {
             action.setPanelLayout("LIST");
         }
     }
-
+    // Implement KeyListener interface
     public void keyTyped(KeyEvent e) {
     }
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ENTER) {
-            System.out.println("Enter pressed");
+            action.setSelectionPath(searchField.getText());
+        }else {
+            searchField.setForeground(Color.BLACK);
         }
     }
 
